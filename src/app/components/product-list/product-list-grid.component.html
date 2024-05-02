@@ -1,12 +1,14 @@
 <div class="main-content">
   <div class="section-content section-content-p30">
+    <h4>Category: {{ currentCategoryName }}</h4>
+    <hr>
     <div class="container-fluid">
       <div class="row">
 
         <!--Loop over products-->
         <div *ngFor="let tempProducts of product" class="col-md-3">
           <div class="product-box">
-            <img alt="product image" src="{{tempProducts.imageUrl}}" class="img-responsive">
+            <img alt="product" src="{{tempProducts.imageUrl}}" class="img-responsive">
             <h1>{{tempProducts.name}}</h1>
             <div class="price">{{tempProducts.unitPrice | currency: 'USD'}}</div>
             <a href="#" class="primary-btn">Add to cart</a>
