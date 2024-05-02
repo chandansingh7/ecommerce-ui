@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductService} from "../../services/product.service";
 import {Product} from "../../common/product";
-import {CurrencyPipe, NgForOf} from "@angular/common";
+import {CurrencyPipe, NgForOf, NgIf} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -9,37 +9,57 @@ import {ActivatedRoute} from "@angular/router";
   standalone: true,
   imports: [
     CurrencyPipe,
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   templateUrl: './product-list-grid.component.html',
   styleUrl: './product-list.component.scss'
 })
-export class ProductListComponent implements OnInit{
+export class ProductListComponent implements OnInit {
 
   product: Product[] = [];
-  currentCategoryId:number = 1;
+  currentCategoryId: number = 1;
   currentCategoryName: string = "";
+  searchMode: boolean = false;
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.route.paramMap.subscribe(() => {
       this.listProducts()
     })
   }
 
-  listProducts(){
+  listProducts() {
+    this.searchMode = this.route.snapshot.paramMap.has('keyword');
+    if (this.searchMode){
+      this.handleSearchProducts();
+    }else {
+      this.handleListProducts()
+    }
+
+  }
+
+  handleSearchProducts() {
+    const theKeyword:string = this.route.snapshot.paramMap.get('keyword')!;
+
+    this.productService.searchProducts(theKeyword).subscribe(data => {
+      this.product = data
+    })
+  }
+
+  handleListProducts(){
     //check if "id" parameter is available
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id')
 
-    if(hasCategoryId){
+    if (hasCategoryId) {
       //get the id from param and convert to number
       this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
       // get the "name" param string
       this.currentCategoryName = this.route.snapshot.paramMap.get('name')!;
-    }else {
+    } else {
       //not category id available default category id to 1
       this.currentCategoryId = 1;
       this.currentCategoryName = 'Books';

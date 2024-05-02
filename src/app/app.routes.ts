@@ -3,6 +3,7 @@ import {ProductListComponent} from "./components/product-list/product-list.compo
 
 export const routes: Routes = [
   {path: 'category/:id/:name', component: ProductListComponent},
+  {path: 'search/:keyword', component: ProductListComponent},
   {path: 'category', component: ProductListComponent},
   {path: 'products', component: ProductListComponent},
   {path: '', redirectTo:'/products', pathMatch: "full"},
