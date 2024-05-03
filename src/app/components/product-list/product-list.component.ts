@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ProductService} from "../../services/product.service";
 import {Product} from "../../common/product";
 import {CurrencyPipe, NgForOf, NgIf} from "@angular/common";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-product-list',
@@ -10,7 +10,8 @@ import {ActivatedRoute} from "@angular/router";
   imports: [
     CurrencyPipe,
     NgForOf,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './product-list-grid.component.html',
   styleUrl: './product-list.component.scss'
