@@ -4,6 +4,8 @@ import {Product} from "../../common/product";
 import {CurrencyPipe, NgForOf, NgIf} from "@angular/common";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
+import {CartItem} from "../../common/cart-item";
+import {CartService} from "../../services/cart.service";
 
 @Component({
   selector: 'app-product-list',
@@ -34,6 +36,7 @@ export class ProductListComponent implements OnInit {
   previousKeyword: string = "";
 
   constructor(private productService: ProductService,
+              private cartService:CartService,
               private route: ActivatedRoute) {
   }
 
@@ -119,8 +122,10 @@ export class ProductListComponent implements OnInit {
     }
   }
 
+  addToCart(tempProducts: Product) {
+    console.log(`Added to cart: ${tempProducts.name}, ${tempProducts.unitPrice}`);
 
-  // addToCart(tempProducts: Product) {
-  //
-  // }
+    const theCartItem = new CartItem(tempProducts);
+    this.cartService.addToCart(theCartItem);
+  }
 }
