@@ -538,7 +538,7 @@ input.au-input.au-input-xl {
 }
 
 .main-content.page-m {
-  padding: 10% 15% !important
+  padding: 10% 30% 10% 5%
 }
 
 /*
@@ -640,23 +640,60 @@ input.au-input.au-input-xl {
   border: 1px solid #ccc
 }
 
+//
+$input-background: #eee; // Example input background color
+$checked-background: #2196F3; // Color when checkbox is checked
+$checkmark-color: white; // Color of the checkmark
+
 .au-checkbox {
   display: block;
   position: relative;
   cursor: pointer;
   font-size: 22px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none
+  -webkit-user-select: none; // Prevent text selection in Chrome/Safari
+  -moz-user-select: none;    // Prevent text selection in Firefox
+  -ms-user-select: none;     // Prevent text selection in IE
+  user-select: none;         // Standard syntax to prevent text selection
+
+  input[type="checkbox"] {
+    opacity: 0; // Hide the checkbox but keep it functional
+    position: absolute;
+    cursor: pointer;
+  }
+
+  .aw-checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: $input-background; // Use variable for background
+    border-radius: 50%; // Circle shape
+    &:after {
+      content: "";
+      position: absolute;
+      display: none; // Hide the checkmark by default
+    }
+  }
+
+  input[type="checkbox"]:checked {
+    & ~ .aw-checkmark {
+      background-color: $checked-background; // Change background when checked
+      &::after {
+        display: block;
+        left: 9px;
+        top: 5px;
+        width: 8px;
+        height: 15px;
+        border: solid $checkmark-color;
+        border-width: 0 3px 3px 0;
+        transform: rotate(45deg); // Tilt the checkmark
+      }
+    }
+  }
 }
 
-.au-checkbox input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer
-}
-
+//
 .au-checkmark {
   position: absolute;
   top: 0;
@@ -709,11 +746,6 @@ label.date {
   transform: rotate(45deg)
 }
 
-option {
-  first {
-    color: #ccc
-  }
-}
 
 select {
   color: #828482
@@ -749,15 +781,6 @@ table.table.table-bordered th {
   padding-right: 1px
 }
 
-.items select {
-  width: 100px;
-  height: 40px;
-  border-radius: 40px;
-  padding-left: 15px;
-  margin-bottom: 10px;
-  outline: 0;
-  margin-left: 5px
-}
 
 /*
  * ----------------------------
@@ -765,11 +788,6 @@ table.table.table-bordered th {
  * ----------------------------
  */
 
-.price {
-  margin: 15px 0 0;
-  font-weight: 800;
-  color: #0da8e4
-}
 
 .detail-section {
   margin-top: 60px
@@ -778,7 +796,6 @@ table.table.table-bordered th {
 .detail-img{
   width: 30%;
 }
-/**/
 
 /*
  * ----------------------------
@@ -1003,7 +1020,7 @@ footer ul li {
     margin-right: 15px
   }
   .main-content.page-m {
-    padding: 10% 0 !important
+    padding: 10% 30% !important
   }
   .header-mobile .navbar-mobile {
     display: none;
@@ -1067,13 +1084,6 @@ footer ul li {
   .cart-area.d-n {
     display: none
   }
-  .cart-area i {
-    font-size: 18px;
-    float: left;
-    margin-top: 16px;
-    color: #03a9f4;
-    margin-left: 15px
-  }
   .total span {
     display: inline-block;
     background: #fff;
@@ -1094,7 +1104,6 @@ footer ul li {
     padding-left: 12px
   }
   .header-mobile .header-mobile-bar {
-    //padding:6px 0;
     background: #fff;
     border: 0;
     padding: 8px 0
